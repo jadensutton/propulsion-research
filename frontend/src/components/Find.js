@@ -110,16 +110,16 @@ function Find ()
 
   return (
     <fieldset class="form">
-      <h1 style={formText}>Algorithmic Stock Screener</h1>
+      <h1 style={formText}>High Momentum Stock Screener</h1>
 
       <h2 style={formText}>Index</h2>
-      <div style={assets}>
-        <input class="checkbox" type="checkbox" id="checkbox_stocks_us" name="asset" value="stocks_us" />
-        <input class="checkbox" type="checkbox" id="checkbox_stocks_ca" name="asset" value="stocks_ca" />
-      </div>
       <div style={icons}>
         <img src="https://i.ibb.co/jWt0nKX/US-Stocks.png" style={icon} />
         <img src="https://i.ibb.co/XpgNYSs/Canadian-Stocks.png" style={icon} />
+      </div>
+      <div style={assets}>
+        <input class="checkbox" type="checkbox" id="checkbox_stocks_us" name="asset" value="stocks_us" />
+        <input class="checkbox" type="checkbox" id="checkbox_stocks_ca" name="asset" value="stocks_ca" />
       </div>
 
       <h2 style={formText}>Risk Tolerance</h2>
@@ -139,7 +139,7 @@ function Find ()
       </div>
       <p style={assetCounter} id="assets_counter">{assets_counter_value}</p>
 
-      <button class="button" onClick={() => findAssets (forceUpdate)} >GO</button>
+      <button class="button" onClick={() => findAssets (forceUpdate)}>GO</button>
 
       <br />
 

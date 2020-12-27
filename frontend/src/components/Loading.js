@@ -5,7 +5,7 @@ function Loading ()
 {
     return (
         <div>
-            <h1>Loading...</h1>
+            <h1 style={{color: "white"}}>Loading...</h1>
             <MoonLoader
                 size={150}
                 color={"#6E0DD0"}

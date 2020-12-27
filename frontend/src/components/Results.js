@@ -20,10 +20,10 @@ function Results (props)
             {results.map ((result)=> {
               return (
                 <tr style={{textAlign: "center"}}>
-                  <td style={textStyle}>Big Peen</td>
+                  <td style={textStyle}>{result[1]["Company"]}</td>
                   <td><p style={textStyle} target="_blank">{result[1]["_id"]}</p></td>
-                  <td style={textStyle}>Big Peen</td>
-                  <td><input class="button" style={{padding: "3px 12px"}} type="button" value="View" /></td>
+                  <td style={textStyle}>{result[1]["Index"].toUpperCase ()}</td>
+                  <td><a href={"/analysis/" + result[1]["Index"] + "/" + result[1]["_id"]} class="button" style={{padding: "3px 12px", fontWeight: "normal"}}>View</a></td>
                 </tr>
               )
             })}

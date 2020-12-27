@@ -14,7 +14,7 @@ from datetime import timedelta
 from time import sleep
 
 pages = list ("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-indices = ["nyse", "nasdaq", "tsx", "tsxv"]
+indices = ["nasdaq", "tsx", "tsxv"]
 for index in indices:
     print ("Getting data for", index.upper ())
 
@@ -26,51 +26,29 @@ for index in indices:
 
         if index == "tsx":
             for ticker in tickers:
-                ticker_list.append (str (ticker.find_all ("td")[0].find ("a").text) + ".TO")
+                ticker_list.append ([str (ticker.find_all ("td")[0].find ("a").text) + ".TO", ticker.find_all ("td")[1].text])
 
             tickers = soup.find_all ('tr',{'class':'re'})
             for ticker in tickers:
-                ticker_list.append (str (ticker.find_all ("td")[0].find ("a").text) + ".TO")
+                ticker_list.append ([str (ticker.find_all ("td")[0].find ("a").text) + ".TO", ticker.find_all ("td")[1].text])
 
         elif index == "tsxv":
             for ticker in tickers:
-                ticker_list.append (str (ticker.find_all ("td")[0].find ("a").text) + ".V")
+                ticker_list.append ([str (ticker.find_all ("td")[0].find ("a").text) + ".V", ticker.find_all ("td")[1].text])
 
             tickers = soup.find_all ('tr',{'class':'re'})
             for ticker in tickers:
-                ticker_list.append (str (ticker.find_all ("td")[0].find ("a").text) + ".V")
+                ticker_list.append ([str (ticker.find_all ("td")[0].find ("a").text) + ".V", ticker.find_all ("td")[1].text])
 
         else:
             for ticker in tickers:
-                ticker_list.append (str (ticker.find_all ("td")[0].find ("a").text))
+                ticker_list.append ([str (ticker.find_all ("td")[0].find ("a").text), ticker.find_all ("td")[1].text])
 
             tickers = soup.find_all ('tr',{'class':'re'})
             for ticker in tickers:
-                ticker_list.append (str (ticker.find_all ("td")[0].find ("a").text))
+                ticker_list.append ([str (ticker.find_all ("td")[0].find ("a").text), ticker.find_all ("td")[1].text])
 
         print (str ("%.2f" % (pages.index (page) / len (pages) * 100)) + "% done")
-
-    print ("Done")
-    print ("\nDownloading data")
-
-    chunks = []
-    prevN = 0
-    for n in range (len (ticker_list)):
-        if (n % 200 == 0 or n == len (ticker_list) - 1) and n != 0:
-            chunk = []
-            for i in range (prevN, n):
-                chunk.append (ticker_list[i])
-
-            chunks.append (chunk)
-            prevN = n
-
-    today = datetime.today ()
-    last_year = today - timedelta (days=365)
-    today, last_year = today.strftime ('%Y-%m-%d'), last_year.strftime ('%Y-%m-%d')
-
-    data = yf.download (' '.join (chunks[0]), last_year, today)["Open"]
-    for chunk in chunks:
-        data[chunk] = yf.download (' '.join (chunk), last_year, today)["Open"]
 
     print ("Done")
     print ("\nRefining data")
@@ -80,7 +58,11 @@ for index in indices:
         try:
             print (str ("%.2f" % (ticker_list.index (ticker) / len (ticker_list) * 100)) + "% done")
 
-            stock_data = data[ticker]
+            today = datetime.today ()
+            last_year = today - timedelta (days=365)
+            today, last_year = today.strftime ('%Y-%m-%d'), last_year.strftime ('%Y-%m-%d')
+            stock_data = yf.download (ticker[0], last_year, today)["Open"]
+
             if len (stock_data) > 120 and np.isnan (stock_data[0]) == False and (stock_data[-1] - stock_data[0]) / stock_data[0] >= 0.2 and stock_data[-1] >= 0.50:
                 returns = []
                 for n in range (len (stock_data)):
@@ -91,7 +73,7 @@ for index in indices:
                 meanReturn = statistics.mean (returns)
                 stdevReturns = statistics.stdev (returns)
 
-                post = {"_id": ticker, "Mean Return": meanReturn, "Standard Deviation": stdevReturns}
+                post = {"_id": ticker[0], "Company": ticker[1], "Mean Return": meanReturn, "Standard Deviation": stdevReturns, "Index": index}
                 posts.append (post)
 
         except Exception as e:
