@@ -1,6 +1,6 @@
 #Import statements
-import bs4
 import requests
+import bs4
 import statistics
 
 import pandas as pd
