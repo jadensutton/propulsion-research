@@ -25,25 +25,24 @@ function Header ()
 {
   const forceUpdate = useForceUpdate ()
   const header = {
-    display: "flex",
-    justifyContent: "left",
-    alignItems: "left",
+    display: "inline-block",
     width: "100%",
-    height: "80px",
-    backgroundColor: "#080a0e",
+    height: "5%",
+    backgroundColor: "#161a25",
+    borderBottom: "2px groove #506aef"
   };
 
   const search = {
-    display: "inline-flex",
-    marginLeft: "400px",
-    marginTop: "18px"
+    float: "middle",
+    marginRight: "210px",
+    marginTop: "1%"
   };
 
-  const header_text = {
-    verticalAlign: "middle",
+  const header_logo = {
     color: "white",
+    width: "400px",
     marginLeft: "20px",
-    textAlign: "left"
+    float: "left"
   };
 
   const option_text = {
@@ -52,7 +51,7 @@ function Header ()
 
   return (
     <div style={header}>
-      <h1 style={header_text}><a href="/">Tradata (Beta)</a></h1>
+      <a href="/"><img src="https://i.ibb.co/f9L2nNf/Darkmode.png" style={header_logo} /></a>
 
       <div style={search}>
         <input class="searchbar" type="text" placeholder="Ticker" id="ticker_input" onChange={() => handleSearchbarChange (forceUpdate)} />
@@ -62,7 +61,7 @@ function Header ()
           <option value="TSX" style={option_text}>TSX</option>
           <option value="TSXV" style={option_text}>TSXV</option>
         </select>
-        <a href={"/analysis/"+ indexDropdown + '/' + tickerInput} class="button" type="button" style={{padding: "3px 20px", height: "50%"}}>Go</a>
+        <a href={"/analysis/"+ indexDropdown + '/' + tickerInput} class="button" type="button" style={{padding: "7px 20px"}}>Go</a>
       </div>
     </div>
   )

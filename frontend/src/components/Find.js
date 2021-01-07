@@ -5,12 +5,14 @@ import Results from "./Results"
 
 import axios from "axios";
 
-var assets_counter_value = 20;
+var assets_counter_value
 
 var loading = false;
 var loaded = false;
 
 var results = []
+var icons = {"US": "https://i.ibb.co/Prf2pKM/US-Stocks.png", "US Checked": "https://i.ibb.co/wzJgVcm/US-Stocks-Checked.png", "CA": "https://i.ibb.co/XZ8XHVx/Canadian-Stocks.png", "CA Checked": "https://i.ibb.co/wJg6tk8/Canadian-Stocks-Checked.png"}
+var currIcon = ["US", "CA"]
 
 function findAssets (forceUpdate)
 {
@@ -18,12 +20,12 @@ function findAssets (forceUpdate)
   forceUpdate ();
 
   var assets = []
-  if (document.getElementById ("checkbox_stocks_us").checked == true)
+  if (currIcon[0] == "US Checked")
   {
     assets.push ("stocks_us");
   }
 
-  if (document.getElementById ("checkbox_stocks_ca").checked == true)
+  if (currIcon[1] == "CA Checked")
   {
     assets.push ("stocks_ca");
   }
@@ -62,6 +64,31 @@ function useForceUpdate()
     return () => setValue(value => ++value)
 }
 
+function handleIconChange (index, forceUpdate)
+{
+  if (currIcon[index] == "US")
+  {
+    currIcon[index] = "US Checked"
+  }
+
+  else if (currIcon[index] == "US Checked")
+  {
+    currIcon[index] = "US"
+  }
+
+  else if (currIcon[index] == "CA")
+  {
+    currIcon[index] = "CA Checked"
+  }
+
+  else if (currIcon[index] == "CA Checked")
+  {
+    currIcon[index] = "CA"
+  }
+
+  forceUpdate ()
+}
+
 function handleSliderChange (slider_id, forceUpdate)
 {
   assets_counter_value = document.getElementById (slider_id).value
@@ -77,20 +104,17 @@ function Find ()
   };
 
   const assets = {
-
-  };
-
-  const icons = {
     display: "inline-flex",
-    width: "160px",
+    width: "200px",
     justifyContent: "space-between",
     marginTop: "5px"
   };
 
   const icon = {
-    width: "50px",
-    height: "50px",
-    verticalAlign: "middle"
+    width: "75px",
+    height: "75px",
+    verticalAlign: "middle",
+    cursor: "pointer"
   };
 
   const riskCaptions = {
@@ -100,7 +124,7 @@ function Find ()
   };
 
   const assetCounter = {
-    color: "#6E0DD0",
+    color: "#506aef",
     fontSize: "32px"
   };
 
@@ -110,16 +134,12 @@ function Find ()
 
   return (
     <fieldset class="form">
-      <h1 style={formText}>High Momentum Stock Screener</h1>
+      <h1 style={formText}>Propulsion Screener</h1>
 
       <h2 style={formText}>Index</h2>
-      <div style={icons}>
-        <img src="https://i.ibb.co/jWt0nKX/US-Stocks.png" style={icon} />
-        <img src="https://i.ibb.co/XpgNYSs/Canadian-Stocks.png" style={icon} />
-      </div>
       <div style={assets}>
-        <input class="checkbox" type="checkbox" id="checkbox_stocks_us" name="asset" value="stocks_us" />
-        <input class="checkbox" type="checkbox" id="checkbox_stocks_ca" name="asset" value="stocks_ca" />
+        <img src={icons[currIcon[0]]} style={icon} onClick={() => handleIconChange (0, forceUpdate)} />
+        <img src={icons[currIcon[1]]} style={icon} onClick={() => handleIconChange (1, forceUpdate)} />
       </div>
 
       <h2 style={formText}>Risk Tolerance</h2>
@@ -128,9 +148,9 @@ function Find ()
       </div>
       <br />
       <div style={riskCaptions}>
-        <h3 style={{color: "#6E0DD0"}}>Low</h3>
-        <h3 style={{color: "#6E0DD0"}}>Medium</h3>
-        <h3 style={{color: "#6E0DD0"}}>High</h3>
+        <h3 style={{color: "#506aef"}}>Low</h3>
+        <h3 style={{color: "#506aef"}}>Medium</h3>
+        <h3 style={{color: "#506aef"}}>High</h3>
       </div>
 
       <h2 style={formText}>Number of Stocks to Show</h2>

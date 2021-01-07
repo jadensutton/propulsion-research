@@ -8,7 +8,7 @@ function Loading ()
             <h1 style={{color: "white"}}>Loading...</h1>
             <MoonLoader
                 size={150}
-                color={"#6E0DD0"}
+                color={"#506aef"}
                 loading={true}
             />
         </div>

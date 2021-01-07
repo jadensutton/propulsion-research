@@ -5,22 +5,25 @@ import { Chart } from "react-google-charts"
 import axios from "axios"
 
 import Header from "../components/Header"
+import Loading from "../components/Loading"
 
-var bullPercent = 1
-var neutralPercent = 1
-var bearPercent = 1
+var bulls = 0
+var neutrals = 0
+var bears = 0
 var subjectivity = 1
 
 var firstRun = true
+var loaded = false
 
 function getSentiment (ticker, index, forceUpdate)
 {
   axios.get ("https://praetorian-trader-stats-api.herokuapp.com/?ticker="+ ticker + "&index=" + index.toLowerCase ())
   .then (response => {
-    bullPercent = response["data"]["Sentiment"]["Polarity"][0] * 100
-    neutralPercent = response["data"]["Sentiment"]["Polarity"][1] * 100
-    bearPercent = response["data"]["Sentiment"]["Polarity"][2] * 100
+    bulls = response["data"]["Sentiment"]["Polarity"][0]
+    neutrals = response["data"]["Sentiment"]["Polarity"][1]
+    bears = response["data"]["Sentiment"]["Polarity"][2]
     subjectivity = response["data"]["Sentiment"]["Subjectivity"]
+    loaded = true
 
     forceUpdate ()
   }).catch (error => {
@@ -56,9 +59,9 @@ function Analysis (props)
 
   var polarities = [
     ["Opinion", "Number of Occurences"],
-    ["Bullish", bullPercent],
-    ["Neutral", neutralPercent],
-    ["Bearish", bearPercent]
+    ["Bullish", bulls],
+    ["Neutral", neutrals],
+    ["Bearish", bears]
   ];
 
   var subjectivities = [
@@ -102,6 +105,7 @@ function Analysis (props)
         <h1 style={{color: "white"}}>Market Sentiment</h1>
 
         <h2 style={{color: "white"}}>Investor Perspectives</h2>
+        {loaded ? null : <Loading />}
         <Chart
           chartType="PieChart"
           width="100%"
@@ -111,6 +115,7 @@ function Analysis (props)
         />
 
         <h2 style={{color: "white"}}>Perspective Driving Force</h2>
+        {loaded ? null : <Loading />}
         <Chart
           chartType="PieChart"
           width="100%"

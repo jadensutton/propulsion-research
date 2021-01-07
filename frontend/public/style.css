@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: Tahoma, sans-serif;
+  font-family: "Segoe UI"
 }
 
 .body {
@@ -55,7 +55,7 @@ body {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #6E0DD0;
+  background: #506aef;
   cursor: pointer;
 }
 
@@ -63,7 +63,7 @@ body {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #6E0DD0;
+  background: #506aef;
   cursor: pointer;
 }
 
@@ -72,7 +72,7 @@ body {
 	background:linear-gradient(to bottom, #161a25 5%, #161a25 100%);
 	background-color:#161a25;
 	border-radius:18px;
-	border:5px solid #7e00c7;
+	border:5px solid #506aef;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -104,27 +104,84 @@ body {
 }
 
 .searchbar {
-  height: 70%;
+  height: 40px;
   text-align: center;
   border-radius: 30px;
   outline: none;
   background-color: transparent;
-  border: 5px solid #7e00c7;
+  border: 5px solid #506aef;
   color: white;
   font-size: 15px;
   border-width: 5px;
 }
 
 .dropdown {
-  height: 70%;
+  height: 40px;
   text-align: center;
   border-radius: 30px;
   outline: none;
   background-color: transparent;
-  border: 5px solid #7e00c7;
+  border: 5px solid #506aef;
   color: white;
   font-size: 15px;
   border-width: 5px;
+}
+
+.growth-bar {
+  -webkit-appearance: none;
+  overflow: hidden;
+  width: 150px;
+  height: 15px;
+  background-color: white;
+  border-radius: 15px;
+  outline: none;
+}
+
+.growth-bar::-webkit-slider-runnable-track {
+  height: 15px;
+  -webkit-appearance: none;
+  color: #26a69a;
+  margin-top: -1px;
+}
+
+.growth-bar::-webkit-slider-thumb {
+  width: 0px;
+  -webkit-appearance: none;
+  height: 15px;
+  cursor: ew-resize;
+  background: #26a69a;
+  box-shadow: -80px 0 0 80px #26a69a;
+  cursor: none;
+  overflow: none;
+  border-color: #26a69a;
+}
+
+.risk-bar {
+  -webkit-appearance: none;
+  overflow: hidden;
+  width: 150px;
+  height: 15px;
+  background-color: white;
+  border-radius: 15px;
+  outline: none;
+}
+
+.risk-bar::-webkit-slider-runnable-track {
+  height: 15px;
+  -webkit-appearance: none;
+  color: #ef5350;
+}
+
+.risk-bar::-webkit-slider-thumb {
+  width: 0px;
+  -webkit-appearance: none;
+  height: 15px;
+  cursor: ew-resize;
+  background: #ef5350;
+  box-shadow: -80px 0 0 80px #ef5350;
+  cursor: none;
+  overflow: none;
+  border-color: #ef5350;
 }
 
 ul {

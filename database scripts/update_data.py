@@ -14,7 +14,7 @@ from datetime import timedelta
 from time import sleep
 
 pages = list ("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-indices = ["nasdaq", "tsx", "tsxv"]
+indices = ["tsx", "tsxv"]
 for index in indices:
     print ("Getting data for", index.upper ())
 
