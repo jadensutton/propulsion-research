@@ -1,0 +1,9 @@
+flask
+flask_cors
+lxml
+requests
+bs4
+textblob
+nltk
+pickle5
+gunicorn
